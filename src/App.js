@@ -1,6 +1,6 @@
 import { h, app } from "./web_modules/hyperapp.js";
 import htm from "./web_modules/htm.js";
-import { Http } from "./web_modules/hyperapp-fx.js";
+import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
 
 const html = htm.bind(h);
 
@@ -9,10 +9,14 @@ const state = {
   posts: [],
 };
 
-const AddPost = state => {
+const AddPost = (state) => {
   if (state.currentPostText.trim()) {
     const newPost = { username: "fixed", body: state.currentPostText };
-    const newState = { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
+    const newState = {
+      ...state,
+      currentPostText: "",
+      posts: [newPost, ...state.posts],
+    };
     return [newState, SavePost(newPost)];
   } else {
     return state;
@@ -41,6 +45,18 @@ const SetPosts = (state, posts) => ({
   ...state,
   posts,
 });
+
+const SetPost = (state, event) => {
+  try {
+    const post = JSON.parse(event.data);
+    return {
+      ...state,
+      posts: [post, ...state.posts],
+    };
+  } catch (e) {
+    return state;
+  }
+};
 
 const LoadLatestPosts = Http({
   url: "https://hyperapp-api.herokuapp.com/api/post",
@@ -75,5 +91,11 @@ const view = (state) => html`
 app({
   init: [state, LoadLatestPosts],
   view,
+  subscriptions: (state) => [
+    WebSocketListen({
+      action: SetPost,
+      url: "ws://hyperapp-api.herokuapp.com",
+    }),
+  ],
   node: document.getElementById("app"),
 });
