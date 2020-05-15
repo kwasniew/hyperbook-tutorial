@@ -2,7 +2,7 @@
   "scripts": {
     "snowpack": "snowpack install --dest=src/web_modules",
     "postinstall": "npm run snowpack",
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/!(web_modules)/*.js'"
   },
   "dependencies": {
     "htm": "3.0.4",
