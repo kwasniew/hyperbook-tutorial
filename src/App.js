@@ -1,6 +1,6 @@
 import { h, app } from "./web_modules/hyperapp.js";
 import htm from "./web_modules/htm.js";
-import { Http } from "./web_modules/hyperapp-fx.js";
+// import { Http } from "./web_modules/hyperapp-fx.js";
 
 const html = htm.bind(h);
 
@@ -27,6 +27,13 @@ const SetPosts = (state, posts) => ({
   ...state,
   posts
 });
+
+const httpEffect = (dispatch, data) => {
+  return fetch(data.url)
+      .then(response => response.json())
+      .then(json => dispatch(data.action, json));
+};
+const Http = data => [httpEffect, data];
 
 const LoadLatestPosts = Http({
   url: "https://hyperapp-api.herokuapp.com/api/post",
