@@ -1,5 +1,5 @@
-import {h, app} from "../node_modules/hyperapp/src/index.js";
-import htm from "../node_modules/htm/dist/htm.mjs";
+import {h, app} from "./web_modules/hyperapp.js";
+import htm from "./web_modules/htm.js";
 
 const html = htm.bind(h);
 

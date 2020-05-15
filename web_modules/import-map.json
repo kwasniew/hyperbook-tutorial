@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "htm": "./htm.js",
+    "hyperapp": "./hyperapp.js"
+  }
+}

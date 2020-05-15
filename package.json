@@ -1,6 +1,13 @@
 {
+  "scripts": {
+    "snowpack": "snowpack install --dest=src/web_modules",
+    "postinstall": "npm run snowpack"
+  },
   "dependencies": {
     "htm": "3.0.4",
     "hyperapp": "2.0.4"
+  },
+  "devDependencies": {
+    "snowpack": "2.0.0-beta.20"
   }
 }
