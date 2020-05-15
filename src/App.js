@@ -6,14 +6,7 @@ const html = htm.bind(h);
 
 const state = {
   currentPostText: "",
-  posts: [
-    {
-      username: "js_developers",
-      body: "Modern JS frameworks are too complicated",
-    },
-    { username: "js_developers", body: "Modern JS frameworks are too heavy" },
-    { username: "jorgebucaran", body: "There, I fixed it for you!" },
-  ],
+  posts: []
 };
 
 const AddPost = (state) => {
@@ -61,7 +54,7 @@ const view = (state) => html`
 `;
 
 app({
-  init: state,
+  init: [state, LoadLatestPosts],
   view,
   node: document.getElementById("app"),
 });
