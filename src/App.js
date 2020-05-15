@@ -16,8 +16,12 @@ const state = {
 };
 
 const AddPost = (state) => {
-  const newPost = { username: "fixed user", body: state.currentPostText };
-  return { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
+  if(state.currentPostText.trim()) {
+    const newPost = { username: "fixed user", body: state.currentPostText };
+    return { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
+  }  else {
+    return state;
+  }
 };
 
 const UpdatePostText = (state, currentPostText) => ({
