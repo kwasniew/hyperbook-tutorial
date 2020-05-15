@@ -14,8 +14,7 @@ const AddPost = (state) => {
     const newPost = { username: "fixed", body: state.currentPostText };
     const newState = {
       ...state,
-      currentPostText: "",
-      posts: [newPost, ...state.posts],
+      currentPostText: ""
     };
     return [newState, SavePost(newPost)];
   } else {
