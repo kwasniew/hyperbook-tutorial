@@ -14,7 +14,7 @@ const AddPost = (state) => {
     const newPost = { username: "fixed", body: state.currentPostText };
     const newState = {
       ...state,
-      currentPostText: ""
+      currentPostText: "",
     };
     return [newState, SavePost(newPost)];
   } else {
@@ -62,6 +62,12 @@ const LoadLatestPosts = Http({
   action: SetPosts,
 });
 
+const eventSourceSubscription = (dispatch, data) => {
+  const es = new EventSource(data.url);
+  es.addEventListener("message", (event) => dispatch(data.action, event));
+};
+const EventSourceListen = (data) => [eventSourceSubscription, data];
+
 const targetValue = (event) => event.target.value;
 
 const listItem = (post) => html`
@@ -91,9 +97,10 @@ app({
   init: [state, LoadLatestPosts],
   view,
   subscriptions: (state) => [
-    WebSocketListen({
+    EventSourceListen({
       action: SetPost,
-      url: "ws://hyperapp-api.herokuapp.com",
+      url: "https://hyperapp-api.herokuapp.com/api/event/post",
+      event: "post",
     }),
   ],
   node: document.getElementById("app"),
