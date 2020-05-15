@@ -4,7 +4,7 @@ import htm from "./web_modules/htm.js";
 const html = htm.bind(h);
 
 const state = {
-  currentPostText: "type your text",
+  currentPostText: "",
   posts: [
     {
       username: "js_developers",
@@ -17,7 +17,7 @@ const state = {
 
 const AddPost = (state) => {
   const newPost = { username: "fixed user", body: state.currentPostText };
-  return { ...state, posts: [newPost, ...state.posts] };
+  return { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
 };
 
 const UpdatePostText = (state, currentPostText) => ({
