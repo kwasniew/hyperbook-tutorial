@@ -20,10 +20,12 @@ const AddPost = (state) => {
   return { ...state, posts: [newPost, ...state.posts] };
 };
 
-const UpdatePostText = (state, event) => ({
+const UpdatePostText = (state, currentPostText) => ({
   ...state,
-  currentPostText: event.target.value
+  currentPostText
 });
+
+const targetValue = event => event.target.value;
 
 const listItem = (post) => html`
   <li>
@@ -35,7 +37,7 @@ const listItem = (post) => html`
 const view = (state) => html`
   <div>
     <h1>Recent Posts</h1>
-    <input type="text" oninput=${UpdatePostText} value=${state.currentPostText} autofocus />
+    <input type="text" oninput=${[UpdatePostText, targetValue]} value=${state.currentPostText} autofocus />
     <button onclick=${AddPost}>Add Post</button>
     <ul>
       ${state.posts.map(listItem)}
