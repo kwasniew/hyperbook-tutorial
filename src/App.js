@@ -9,10 +9,11 @@ const state = {
   posts: [],
 };
 
-const AddPost = (state) => {
+const AddPost = state => {
   if (state.currentPostText.trim()) {
-    const newPost = { username: "fixed user", body: state.currentPostText };
-    return { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
+    const newPost = { username: "fixed", body: state.currentPostText };
+    const newState = { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
+    return [newState, SavePost(newPost)];
   } else {
     return state;
   }
