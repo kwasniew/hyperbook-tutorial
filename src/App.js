@@ -1,5 +1,6 @@
 import { h, app } from "./web_modules/hyperapp.js";
 import htm from "./web_modules/htm.js";
+import { Http } from "./web_modules/hyperapp-fx.js";
 
 const html = htm.bind(h);
 
@@ -27,6 +28,16 @@ const AddPost = (state) => {
 const UpdatePostText = (state, currentPostText) => ({
   ...state,
   currentPostText
+});
+
+const SetPosts = (state, posts) => ({
+  ...state,
+  posts
+});
+
+const LoadLatestPosts = Http({
+  url: "https://hyperapp-api.herokuapp.com/api/post",
+  action: SetPosts
 });
 
 const targetValue = event => event.target.value;
