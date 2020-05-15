@@ -64,7 +64,12 @@ const LoadLatestPosts = Http({
 
 const eventSourceSubscription = (dispatch, data) => {
   const es = new EventSource(data.url);
-  es.addEventListener("message", (event) => dispatch(data.action, event));
+  const listener = (event) => dispatch(data.action, event);
+  es.addEventListener("message", listener);
+
+  return () => {
+    es.removeEventListener("message", listener);
+  };
 };
 const EventSourceListen = (data) => [eventSourceSubscription, data];
 
