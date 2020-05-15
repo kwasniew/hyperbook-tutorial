@@ -10,10 +10,13 @@ const state = {
   liveUpdate: true,
 };
 
-const ToggleLiveUpdate = (state) => ({
-  ...state,
-  liveUpdate: !state.liveUpdate,
-});
+const ToggleLiveUpdate = (state) => {
+  const newState = {
+    ...state,
+    liveUpdate: !state.liveUpdate,
+  };
+  return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState]
+};
 
 const AddPost = (state) => {
   if (state.currentPostText.trim()) {
