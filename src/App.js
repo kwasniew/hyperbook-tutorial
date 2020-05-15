@@ -6,34 +6,47 @@ const html = htm.bind(h);
 
 const state = {
   currentPostText: "",
-  posts: []
+  posts: [],
 };
 
 const AddPost = (state) => {
-  if(state.currentPostText.trim()) {
+  if (state.currentPostText.trim()) {
     const newPost = { username: "fixed user", body: state.currentPostText };
     return { ...state, currentPostText: "", posts: [newPost, ...state.posts] };
-  }  else {
+  } else {
     return state;
   }
 };
 
+const SavePost = (post) =>
+  Http({
+    url: "https://hyperapp-api.herokuapp.com/api/post",
+    options: {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    },
+    action: (state, data) => state,
+  });
+
 const UpdatePostText = (state, currentPostText) => ({
   ...state,
-  currentPostText
+  currentPostText,
 });
 
 const SetPosts = (state, posts) => ({
   ...state,
-  posts
+  posts,
 });
 
 const LoadLatestPosts = Http({
   url: "https://hyperapp-api.herokuapp.com/api/post",
-  action: SetPosts
+  action: SetPosts,
 });
 
-const targetValue = event => event.target.value;
+const targetValue = (event) => event.target.value;
 
 const listItem = (post) => html`
   <li>
@@ -45,7 +58,12 @@ const listItem = (post) => html`
 const view = (state) => html`
   <div>
     <h1>Recent Posts</h1>
-    <input type="text" oninput=${[UpdatePostText, targetValue]} value=${state.currentPostText} autofocus />
+    <input
+      type="text"
+      oninput=${[UpdatePostText, targetValue]}
+      value=${state.currentPostText}
+      autofocus
+    />
     <button onclick=${AddPost}>Add Post</button>
     <ul>
       ${state.posts.map(listItem)}
