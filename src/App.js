@@ -7,7 +7,13 @@ const html = htm.bind(h);
 const state = {
   currentPostText: "",
   posts: [],
+  liveUpdate: true,
 };
+
+const ToggleLiveUpdate = (state) => ({
+  ...state,
+  liveUpdate: !state.liveUpdate,
+});
 
 const AddPost = (state) => {
   if (state.currentPostText.trim()) {
@@ -69,6 +75,7 @@ const eventSourceSubscription = (dispatch, data) => {
 
   return () => {
     es.removeEventListener("message", listener);
+    es.close();
   };
 };
 const EventSourceListen = (data) => [eventSourceSubscription, data];
@@ -92,6 +99,13 @@ const view = (state) => html`
       autofocus
     />
     <button onclick=${AddPost}>Add Post</button>
+    <input
+      type="checkbox"
+      id="liveUpdate"
+      onchange=${ToggleLiveUpdate}
+      checked=${state.liveUpdate}
+    />
+    <label for="liveUpdate">Live Update</label>
     <ul>
       ${state.posts.map(listItem)}
     </ul>
@@ -102,11 +116,12 @@ app({
   init: [state, LoadLatestPosts],
   view,
   subscriptions: (state) => [
-    EventSourceListen({
-      action: SetPost,
-      url: "https://hyperapp-api.herokuapp.com/api/event/post",
-      event: "post",
-    }),
+    state.liveUpdate &&
+      EventSourceListen({
+        action: SetPost,
+        url: "https://hyperapp-api.herokuapp.com/api/event/post",
+        event: "post",
+      }),
   ],
   node: document.getElementById("app"),
 });
