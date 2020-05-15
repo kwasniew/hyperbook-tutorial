@@ -1,5 +1,5 @@
-import {h, app} from "https://unpkg.com/hyperapp?module";
-import htm from 'https://unpkg.com/htm?module';
+import {h, app} from "../node_modules/hyperapp/src/index.js";
+import htm from "../node_modules/htm/dist/htm.mjs";
 
 const html = htm.bind(h);
 
