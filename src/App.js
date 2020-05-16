@@ -1,4 +1,4 @@
-import { h, app } from "./web_modules/hyperapp.js";
+import { h, app, Lazy } from "./web_modules/hyperapp.js";
 import htm from "./web_modules/htm.js";
 import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
 
@@ -129,6 +129,13 @@ const addPostButton = ({ status }) => html`
   <button onclick=${AddPost} disabled=${status === "saving"}>Add Post</button>
 `;
 
+const postList = ({ posts }) => html`
+  <ul>
+    ${posts.map(listItem)}
+  </ul>
+`;
+const lazyPostList = ({posts}) => Lazy({view: postList, posts});
+
 const view = (state) => html`
   <div>
     <h1>Recent Posts</h1>
@@ -146,9 +153,7 @@ const view = (state) => html`
       checked=${state.liveUpdate}
     />
     <label for="liveUpdate">Live Update</label>
-    <ul>
-      ${state.posts.map(listItem)}
-    </ul>
+    ${lazyPostList({ posts: state.posts })}
   </div>
 `;
 
