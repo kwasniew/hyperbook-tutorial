@@ -109,6 +109,14 @@ const eventSourceSubscription = (dispatch, data) => {
 };
 const EventSourceListen = (data) => [eventSourceSubscription, data];
 
+const WithGuid = (action) => (state) => [state, Guid(action)];
+const Guid = (action) => [
+  (dispatch, action) => {
+    dispatch(action, guid());
+  },
+  action,
+];
+
 const targetValue = (event) => event.target.value;
 
 const listItem = (post) => html`
@@ -126,7 +134,9 @@ const errorMessage = ({ status, message }) => {
 };
 
 const addPostButton = ({ status }) => html`
-  <button onclick=${AddPost} disabled=${status === "saving"}>Add Post</button>
+  <button onclick=${WithGuid(AddPost)} disabled=${status === "saving"}>
+    Add Post
+  </button>
 `;
 
 const postList = ({ posts }) => html`
