@@ -45,7 +45,7 @@ const PostSaved = (state) => ({ ...state, requestStatus: idle });
 const PostError = (state) => ({ ...state, requestStatus: error });
 const SavePost = (post) =>
   Http({
-    url: "https://hyperapp-api.herokuapp.com/error-api/post",
+    url: "https://hyperapp-api.herokuapp.com/api/post",
     options: {
       method: "post",
       headers: {
