@@ -8,6 +8,7 @@ const state = {
   currentPostText: "",
   posts: [],
   liveUpdate: true,
+  isSaving: false,
 };
 
 const ToggleLiveUpdate = (state) => {
@@ -15,7 +16,7 @@ const ToggleLiveUpdate = (state) => {
     ...state,
     liveUpdate: !state.liveUpdate,
   };
-  return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState]
+  return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState];
 };
 
 const AddPost = (state) => {
@@ -24,6 +25,7 @@ const AddPost = (state) => {
     const newState = {
       ...state,
       currentPostText: "",
+      isSaving: true,
     };
     return [newState, SavePost(newPost)];
   } else {
@@ -31,9 +33,10 @@ const AddPost = (state) => {
   }
 };
 
+const PostSaved = (state) => ({ ...state, isSaving: false });
 const SavePost = (post) =>
   Http({
-    url: "https://hyperapp-api.herokuapp.com/api/post",
+    url: "https://hyperapp-api.herokuapp.com/slow-api/post",
     options: {
       method: "post",
       headers: {
@@ -41,7 +44,7 @@ const SavePost = (post) =>
       },
       body: JSON.stringify(post),
     },
-    action: (state, data) => state,
+    action: PostSaved,
   });
 
 const UpdatePostText = (state, currentPostText) => ({
@@ -101,7 +104,7 @@ const view = (state) => html`
       value=${state.currentPostText}
       autofocus
     />
-    <button onclick=${AddPost}>Add Post</button>
+    <button onclick=${AddPost} disabled=${state.isSaving}>Add Post</button>
     <input
       type="checkbox"
       id="liveUpdate"
