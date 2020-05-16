@@ -112,7 +112,7 @@ const EventSourceListen = (data) => [eventSourceSubscription, data];
 const targetValue = (event) => event.target.value;
 
 const listItem = (post) => html`
-  <li>
+  <li key=${post.id} data-key=${post.id}>
     <strong>@${post.username}</strong>
     <span> ${post.body}</span>
   </li>
