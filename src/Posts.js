@@ -1,16 +1,10 @@
 import { h, app, Lazy } from "./web_modules/hyperapp.js";
 import htm from "./web_modules/htm.js";
-import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
+import { Http } from "./web_modules/hyperapp-fx.js";
+import { EventSourceListen } from "./lib/EventSource.js";
+import { WithGuid } from "./lib/Guid.js";
 
 const html = htm.bind(h);
-
-const guid = () => {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
 
 const idle = { status: "idle" };
 const saving = { status: "saving" };
@@ -35,10 +29,10 @@ const ToggleLiveUpdate = (state) => {
   return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState];
 };
 
-const AddPost = (state) => {
+export const AddPost = (state, id) => {
   if (state.currentPostText.trim()) {
     const newPost = {
-      id: guid(),
+      id,
       username: "fixed",
       body: state.currentPostText,
     };
@@ -96,26 +90,6 @@ export const LoadLatestPosts = Http({
   url: "https://hyperapp-api.herokuapp.com/api/post?limit=1000",
   action: SetPosts,
 });
-
-const eventSourceSubscription = (dispatch, data) => {
-  const es = new EventSource(data.url);
-  const listener = (event) => dispatch(data.action, event);
-  es.addEventListener("message", listener);
-
-  return () => {
-    es.removeEventListener("message", listener);
-    es.close();
-  };
-};
-const EventSourceListen = (data) => [eventSourceSubscription, data];
-
-const WithGuid = (action) => (state) => [state, Guid(action)];
-const Guid = (action) => [
-  (dispatch, action) => {
-    dispatch(action, guid());
-  },
-  action,
-];
 
 const targetValue = (event) => event.target.value;
 
