@@ -4,12 +4,19 @@ import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
 
 const html = htm.bind(h);
 
+const idle = { status: "idle" };
+const saving = { status: "saving" };
+const error = {
+  status: "error",
+  message: "Post cannot be saved. Please try again.",
+};
 const state = {
   currentPostText: "",
   posts: [],
   liveUpdate: true,
   isSaving: false,
   error: "",
+  requestStatus: idle,
 };
 
 const ToggleLiveUpdate = (state) => {
@@ -26,7 +33,7 @@ const AddPost = (state) => {
     const newState = {
       ...state,
       currentPostText: "",
-      isSaving: true,
+      requestStatus: saving,
     };
     return [newState, SavePost(newPost)];
   } else {
@@ -34,12 +41,8 @@ const AddPost = (state) => {
   }
 };
 
-const PostSaved = (state) => ({ ...state, isSaving: false });
-const PostError = (state) => ({
-  ...state,
-  isSaving: false,
-  error: "Post cannot be saved. Please try again.",
-});
+const PostSaved = (state) => ({ ...state, requestStatus: idle });
+const PostError = (state) => ({ ...state, requestStatus: error });
 const SavePost = (post) =>
   Http({
     url: "https://hyperapp-api.herokuapp.com/error-api/post",
@@ -102,6 +105,17 @@ const listItem = (post) => html`
   </li>
 `;
 
+const errorMessage = ({ status, message }) => {
+  if (status === "error") {
+    return html` <div>${message}</div> `;
+  }
+  return "";
+};
+
+const addPostButton = ({ status }) => html`
+  <button onclick=${AddPost} disabled=${status === "saving"}>Add Post</button>
+`;
+
 const view = (state) => html`
   <div>
     <h1>Recent Posts</h1>
@@ -111,8 +125,7 @@ const view = (state) => html`
       value=${state.currentPostText}
       autofocus
     />
-    <div>${state.error}</div>
-    <button onclick=${AddPost} disabled=${state.isSaving}>Add Post</button>
+    ${errorMessage(state.requestStatus)} ${addPostButton(state.requestStatus)}
     <input
       type="checkbox"
       id="liveUpdate"
