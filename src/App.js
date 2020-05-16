@@ -4,6 +4,14 @@ import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
 
 const html = htm.bind(h);
 
+const guid = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
 const idle = { status: "idle" };
 const saving = { status: "saving" };
 const error = {
@@ -29,7 +37,11 @@ const ToggleLiveUpdate = (state) => {
 
 const AddPost = (state) => {
   if (state.currentPostText.trim()) {
-    const newPost = { username: "fixed", body: state.currentPostText };
+    const newPost = {
+      id: guid(),
+      username: "fixed",
+      body: state.currentPostText,
+    };
     const newState = {
       ...state,
       currentPostText: "",
@@ -60,7 +72,7 @@ const SavePost = (post) =>
 const UpdatePostText = (state, currentPostText) => ({
   ...state,
   currentPostText,
-  requestStatus: idle
+  requestStatus: idle,
 });
 
 const SetPosts = (state, posts) => ({
