@@ -93,7 +93,7 @@ const SetPost = (state, event) => {
 };
 
 const LoadLatestPosts = Http({
-  url: "https://hyperapp-api.herokuapp.com/api/post",
+  url: "https://hyperapp-api.herokuapp.com/api/post?limit=1000",
   action: SetPosts,
 });
 
