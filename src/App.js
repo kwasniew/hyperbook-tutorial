@@ -9,6 +9,7 @@ const state = {
   posts: [],
   liveUpdate: true,
   isSaving: false,
+  error: "",
 };
 
 const ToggleLiveUpdate = (state) => {
@@ -34,9 +35,14 @@ const AddPost = (state) => {
 };
 
 const PostSaved = (state) => ({ ...state, isSaving: false });
+const PostError = (state) => ({
+  ...state,
+  isSaving: false,
+  error: "Post cannot be saved. Please try again.",
+});
 const SavePost = (post) =>
   Http({
-    url: "https://hyperapp-api.herokuapp.com/slow-api/post",
+    url: "https://hyperapp-api.herokuapp.com/error-api/post",
     options: {
       method: "post",
       headers: {
@@ -45,6 +51,7 @@ const SavePost = (post) =>
       body: JSON.stringify(post),
     },
     action: PostSaved,
+    error: PostError,
   });
 
 const UpdatePostText = (state, currentPostText) => ({
@@ -104,6 +111,7 @@ const view = (state) => html`
       value=${state.currentPostText}
       autofocus
     />
+    <div>${state.error}</div>
     <button onclick=${AddPost} disabled=${state.isSaving}>Add Post</button>
     <input
       type="checkbox"
