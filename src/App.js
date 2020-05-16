@@ -1,5 +1,5 @@
 import { app } from "./web_modules/hyperapp.js";
-import {init, view, subscriptions} from "./Posts.js";
+import { init, view, subscriptions } from "./Posts.js";
 
 app({
   init,

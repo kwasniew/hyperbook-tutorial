@@ -5,107 +5,107 @@ import { Http, WebSocketListen } from "./web_modules/hyperapp-fx.js";
 const html = htm.bind(h);
 
 const guid = () => {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-        var r = (Math.random() * 16) | 0,
-            v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 };
 
 const idle = { status: "idle" };
 const saving = { status: "saving" };
 const error = {
-    status: "error",
-    message: "Post cannot be saved. Please try again.",
+  status: "error",
+  message: "Post cannot be saved. Please try again.",
 };
 export const state = {
-    currentPostText: "",
-    posts: [],
-    liveUpdate: true,
-    isSaving: false,
-    error: "",
-    requestStatus: idle,
+  currentPostText: "",
+  posts: [],
+  liveUpdate: true,
+  isSaving: false,
+  error: "",
+  requestStatus: idle,
 };
 
 const ToggleLiveUpdate = (state) => {
-    const newState = {
-        ...state,
-        liveUpdate: !state.liveUpdate,
-    };
-    return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState];
+  const newState = {
+    ...state,
+    liveUpdate: !state.liveUpdate,
+  };
+  return newState.liveUpdate ? [newState, LoadLatestPosts] : [newState];
 };
 
 const AddPost = (state) => {
-    if (state.currentPostText.trim()) {
-        const newPost = {
-            id: guid(),
-            username: "fixed",
-            body: state.currentPostText,
-        };
-        const newState = {
-            ...state,
-            currentPostText: "",
-            requestStatus: saving,
-        };
-        return [newState, SavePost(newPost)];
-    } else {
-        return state;
-    }
+  if (state.currentPostText.trim()) {
+    const newPost = {
+      id: guid(),
+      username: "fixed",
+      body: state.currentPostText,
+    };
+    const newState = {
+      ...state,
+      currentPostText: "",
+      requestStatus: saving,
+    };
+    return [newState, SavePost(newPost)];
+  } else {
+    return state;
+  }
 };
 
 const PostSaved = (state) => ({ ...state, requestStatus: idle });
 const PostError = (state) => ({ ...state, requestStatus: error });
 const SavePost = (post) =>
-    Http({
-        url: "https://hyperapp-api.herokuapp.com/api/post",
-        options: {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(post),
-        },
-        action: PostSaved,
-        error: PostError,
-    });
+  Http({
+    url: "https://hyperapp-api.herokuapp.com/api/post",
+    options: {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    },
+    action: PostSaved,
+    error: PostError,
+  });
 
 export const UpdatePostText = (state, currentPostText) => ({
-    ...state,
-    currentPostText,
-    requestStatus: idle,
+  ...state,
+  currentPostText,
+  requestStatus: idle,
 });
 
 const SetPosts = (state, posts) => ({
-    ...state,
-    posts,
+  ...state,
+  posts,
 });
 
 const SetPost = (state, event) => {
-    try {
-        const post = JSON.parse(event.data);
-        return {
-            ...state,
-            posts: [post, ...state.posts],
-        };
-    } catch (e) {
-        return state;
-    }
+  try {
+    const post = JSON.parse(event.data);
+    return {
+      ...state,
+      posts: [post, ...state.posts],
+    };
+  } catch (e) {
+    return state;
+  }
 };
 
 export const LoadLatestPosts = Http({
-    url: "https://hyperapp-api.herokuapp.com/api/post?limit=1000",
-    action: SetPosts,
+  url: "https://hyperapp-api.herokuapp.com/api/post?limit=1000",
+  action: SetPosts,
 });
 
 const eventSourceSubscription = (dispatch, data) => {
-    const es = new EventSource(data.url);
-    const listener = (event) => dispatch(data.action, event);
-    es.addEventListener("message", listener);
+  const es = new EventSource(data.url);
+  const listener = (event) => dispatch(data.action, event);
+  es.addEventListener("message", listener);
 
-    return () => {
-        es.removeEventListener("message", listener);
-        es.close();
-    };
+  return () => {
+    es.removeEventListener("message", listener);
+    es.close();
+  };
 };
 const EventSourceListen = (data) => [eventSourceSubscription, data];
 
@@ -119,10 +119,10 @@ const listItem = (post) => html`
 `;
 
 const errorMessage = ({ status, message }) => {
-    if (status === "error") {
-        return html` <div>${message}</div> `;
-    }
-    return "";
+  if (status === "error") {
+    return html` <div>${message}</div> `;
+  }
+  return "";
 };
 
 const addPostButton = ({ status }) => html`
@@ -134,7 +134,7 @@ const postList = ({ posts }) => html`
     ${posts.map(listItem)}
   </ul>
 `;
-const lazyPostList = ({posts}) => Lazy({view: postList, posts});
+const lazyPostList = ({ posts }) => Lazy({ view: postList, posts });
 
 export const view = (state) => html`
   <div>
@@ -158,11 +158,11 @@ export const view = (state) => html`
 `;
 
 export const subscriptions = (state) => [
-    state.liveUpdate &&
+  state.liveUpdate &&
     EventSourceListen({
-        action: SetPost,
-        url: "https://hyperapp-api.herokuapp.com/api/event/post",
-        event: "post",
+      action: SetPost,
+      url: "https://hyperapp-api.herokuapp.com/api/event/post",
+      event: "post",
     }),
 ];
 
