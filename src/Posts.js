@@ -87,14 +87,14 @@ const SetPost = (state, event) => {
 };
 
 export const LoadLatestPosts = Http({
-  url: "https://hyperapp-api.herokuapp.com/api/post?limit=1000",
+  url: "https://hyperapp-api.herokuapp.com/api/post",
   action: SetPosts,
 });
 
 const targetValue = (event) => event.target.value;
 
 const listItem = (post) => html`
-  <li key=${post.id} data-key=${post.id}>
+  <li key=${post.id} data-key=${post.id} data-testid="item">
     <strong>@${post.username}</strong>
     <span> ${post.body}</span>
   </li>
