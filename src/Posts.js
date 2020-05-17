@@ -33,7 +33,7 @@ export const AddPost = (state, id) => {
   if (state.currentPostText.trim()) {
     const newPost = {
       id,
-      username: "fixed",
+      username: "anonymous",
       body: state.currentPostText,
     };
     const newState = {
@@ -124,6 +124,7 @@ export const view = (state) => html`
   <div>
     <h1>Recent Posts</h1>
     <input
+      data-testid="post-input"
       type="text"
       oninput=${[UpdatePostText, targetValue]}
       value=${state.currentPostText}
