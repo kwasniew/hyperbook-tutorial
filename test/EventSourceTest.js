@@ -55,4 +55,16 @@ describe("Event source subscription", () => {
     ]);
   });
 
+  it("ignores events emitted after unsubscribe", () => {
+    const { emit, isClosed } = givenEventSource("http://example.com");
+    const { dispatch, unsubscribe } = runFx(
+      EventSourceListen({ url: "http://example.com", action: "action" })
+    );
+    unsubscribe();
+
+    emit({ data: "event data" });
+
+    assert.deepStrictEqual(dispatch.invokedWith, undefined);
+    assert.ok(isClosed());
+  });
 });
