@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@hyperapp/events": "https://cdn.pika.dev/pin/@hyperapp/events@v0.0.4-Zyq12vQ81aGzmPM1bofM/events.js",
+    "htm": "https://cdn.pika.dev/pin/htm@v3.0.4-PLoxEux0X75jBr5u58kM/htm.js",
+    "hyperapp": "https://cdn.pika.dev/pin/hyperapp@v2.0.4-BmYf4X5O5bsacW4nID88/hyperapp.js",
+    "hyperapp-fx": "https://cdn.pika.dev/pin/hyperapp-fx@v2.0.0-beta.1-AcjI6rXYVSuGBe5VEGDy/hyperapp-fx.js",
+    "page": "https://cdn.pika.dev/pin/page@v1.11.6-mQU3HTSwG6rx1AQqpHGQ/page.js"
+  }
+}

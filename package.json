@@ -1,16 +1,19 @@
 {
   "type": "module",
   "scripts": {
-    "snowpack": "snowpack install --exclude 'test/**' --dest=src/web_modules",
+    "snowpack": "snowpack install --exclude '**/*' --dest=src/web_modules",
     "postinstall": "npm run snowpack",
     "format": "prettier --write '**/!(web_modules)/*.js'",
     "test": "mocha test/*Test.js"
   },
   "dependencies": {
+    "hyperapp-render": "3.2.0"
+  },
+  "webDependencies": {
+    "@hyperapp/events": "0.0.4",
     "htm": "3.0.4",
     "hyperapp": "2.0.4",
     "hyperapp-fx": "2.0.0-beta.1",
-    "@hyperapp/events": "0.0.4",
     "page": "1.11.6"
   },
   "devDependencies": {
