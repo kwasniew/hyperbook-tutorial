@@ -5,7 +5,8 @@
     "postinstall": "npm run snowpack",
     "format": "prettier --write '**/*.js'",
     "test": "mocha test/*Test.js",
-    "ssr": "node Server.js"
+    "ssr": "node Server.js",
+    "build": "parcel build src/index.html"
   },
   "dependencies": {
     "axios": "0.19.2",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "mocha": "7.1.2",
+    "parcel": "1.12.4",
     "prettier": "2.0.5",
     "snowpack": "2.0.0-beta.20"
   }
