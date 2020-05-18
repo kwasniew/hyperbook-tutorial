@@ -21,8 +21,4 @@ const view = (state) => html`
   </form>
 `;
 
-app({
-  init: [state],
-  view: layout(view),
-  node: document.getElementById("app"),
-});
+export const InitPage = (location) => (state) => ({ location, ...state });

@@ -158,4 +158,7 @@ export const subscriptions = (state) => [
     }),
 ];
 
-export const init = [state, LoadLatestPosts, ReadUsername];
+export const InitPage = (location) => [
+  { location, ...state },
+  [LoadLatestPosts, ReadUsername],
+];
