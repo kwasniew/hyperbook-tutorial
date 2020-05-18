@@ -17,7 +17,7 @@ describe("App", () => {
     history.pushState({}, "", "/");
   });
 
-  it("Load initial posts", async () => {
+  it.skip("Load initial posts", async () => {
     start();
     await waitFor(() => {
       assert.strictEqual(getAllByTestId(container(), "item").length, 10);
@@ -44,7 +44,7 @@ describe("App", () => {
     });
   };
 
-  it("Add a post as anonymous user", async () => {
+  it.skip("Add a post as anonymous user", async () => {
     start();
     const newMessage = randomMessage();
 
