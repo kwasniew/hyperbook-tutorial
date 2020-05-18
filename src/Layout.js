@@ -1,4 +1,4 @@
-import { html } from "./html.js";
+import { html } from "./Html.js";
 
 const nav = html`
   <nav>
