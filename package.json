@@ -6,7 +6,7 @@
     "format": "prettier --write '**/*.js'",
     "test": "mocha test/*Test.js",
     "ssr": "node Server.js",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --experimental-scope-hoisting"
   },
   "dependencies": {
     "axios": "0.19.2",
