@@ -1,6 +1,6 @@
 import { app } from "./web_modules/hyperapp.js";
-import { layout } from "./layout.js";
-import { html } from "./html.js";
+import { layout } from "./Layout.js";
+import { html } from "./Html.js";
 import { WriteToStorage } from "./web_modules/hyperapp-fx.js";
 
 const state = {
