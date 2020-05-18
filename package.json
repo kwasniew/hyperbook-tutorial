@@ -3,10 +3,12 @@
   "scripts": {
     "snowpack": "snowpack install --exclude '**/*' --dest=src/web_modules",
     "postinstall": "npm run snowpack",
-    "format": "prettier --write '**/!(web_modules)/*.js'",
+    "format": "prettier --write '**/*.js'",
     "test": "mocha test/*Test.js"
   },
   "dependencies": {
+    "axios": "0.19.2",
+    "express": "4.17.1",
     "hyperapp-render": "3.2.0"
   },
   "webDependencies": {

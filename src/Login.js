@@ -1,7 +1,7 @@
 import { html } from "./Html.js";
 import { WriteToStorage } from "./web_modules/hyperapp-fx.js";
-import {Navigate} from "./Router.js";
-import {preventDefault} from "./web_modules/@hyperapp/events.js";
+import { Navigate } from "./Router.js";
+import { preventDefault } from "./web_modules/@hyperapp/events.js";
 
 const state = {
   username: "",

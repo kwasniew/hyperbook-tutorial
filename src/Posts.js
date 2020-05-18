@@ -69,7 +69,7 @@ export const UpdatePostText = (state, currentPostText) => ({
   requestStatus: idle,
 });
 
-const SetPosts = (state, posts) => ({
+export const SetPosts = (state, posts) => ({
   ...state,
   posts,
 });
