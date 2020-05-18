@@ -1,16 +1,22 @@
 import page from "./web_modules/page.js";
+import { InitPage as InitLoginPage } from "./Login.js";
+import { InitPage as InitPostsPage } from "./Posts.js";
+
+const SetLocation = (state, location) => ({ location });
 
 const routeSubscription = (dispatch, data) => {
-    page("/", () => {
+  page("/", () => {
+    dispatch(SetLocation, "/");
+    dispatch(InitPostsPage);
+  });
+  page("/login", () => {
+    dispatch(SetLocation, "/login");
+    dispatch(InitLoginPage);
+  });
 
-    });
-    page("/login", () => {
+  page.start();
 
-    });
-
-    page.start();
-
-    return () => {
-        page.stop();
-    };
+  return () => {
+    page.stop();
+  };
 };
