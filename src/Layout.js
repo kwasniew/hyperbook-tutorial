@@ -12,7 +12,7 @@ const nav = html`
 export const layout = (view) => (state) => html`
   <div>
     <header>
-      <h1>HyperPosts</h1>
+      <h1>@${state.username} HyperPosts</h1>
       ${nav}
     </header>
     <main>
