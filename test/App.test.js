@@ -13,6 +13,7 @@ const container = () => document.getElementById("app");
 describe("App", () => {
   beforeEach(function () {
     container().innerHTML = "";
+    localStorage.removeItem("hyperposts");
   });
 
   it("Load initial posts", async () => {
@@ -49,5 +50,15 @@ describe("App", () => {
     await sendMessage(newMessage);
 
     await waitForMessage(`@anonymous ${newMessage}`);
+  });
+
+  it("Add a post as logged in user", async () => {
+    localStorage.setItem("hyperposts", JSON.stringify("kate"));
+    start();
+    const newMessage = randomMessage();
+
+    await sendMessage(newMessage);
+
+    await waitForMessage(`@kate ${newMessage}`);
   });
 });
