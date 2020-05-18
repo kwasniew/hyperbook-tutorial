@@ -25,6 +25,9 @@ export const start = () =>
   app({
     init: {},
     view: layout(view),
-    subscriptions: (state) => [subscriptions(state), RouteListen(pageInitActions)],
+    subscriptions: (state) => [
+      subscriptions(state),
+      RouteListen(pageInitActions),
+    ],
     node: document.getElementById("app"),
   });

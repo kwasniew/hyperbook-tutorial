@@ -17,3 +17,14 @@ const routeSubscription = (dispatch, data) => {
 };
 
 export const RouteListen = (data) => [routeSubscription, data];
+
+const navigateEffect = (location) => [
+  (_, location) => {
+    page(location);
+  },
+  location,
+];
+export const Navigate = (location) => (state) => [
+  state,
+  navigateEffect(location),
+];

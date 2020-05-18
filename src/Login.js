@@ -1,22 +1,21 @@
-import { app } from "./web_modules/hyperapp.js";
-import { layout } from "./Layout.js";
 import { html } from "./Html.js";
 import { WriteToStorage } from "./web_modules/hyperapp-fx.js";
+import {Navigate} from "./Router.js";
 
 const state = {
-  login: "",
+  username: "",
 };
 
 const targetValue = (event) => event.target.value;
 
-const ChangeLogin = (state, login) => [
-  { ...state, login },
-  WriteToStorage({ key: "hyperposts", value: login }),
+const ChangeLogin = (state, username) => [
+  { ...state, username },
+  WriteToStorage({ key: "hyperposts", value: username }),
 ];
 
 export const view = (state) => html`
-  <form method="get" action="/">
-    <input onchange=${[ChangeLogin, targetValue]} value=${state.login} />
+  <form method="get" action="/" onsubmit=${Navigate("/")}>
+    <input oninput=${[ChangeLogin, targetValue]} value=${state.username} />
     <button>Login</button>
   </form>
 `;

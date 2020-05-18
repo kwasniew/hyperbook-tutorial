@@ -14,6 +14,7 @@ describe("App", () => {
   beforeEach(function () {
     container().innerHTML = "";
     localStorage.removeItem("hyperposts");
+    history.pushState({}, "", "/");
   });
 
   it("Load initial posts", async () => {
