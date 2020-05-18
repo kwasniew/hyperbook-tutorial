@@ -9,7 +9,8 @@
   "dependencies": {
     "axios": "0.19.2",
     "express": "4.17.1",
-    "hyperapp-render": "3.2.0"
+    "hyperapp-render": "3.2.0",
+    "serialize-javascript": "3.0.0"
   },
   "webDependencies": {
     "@hyperapp/events": "0.0.4",

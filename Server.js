@@ -1,7 +1,8 @@
 import render from "hyperapp-render";
 import express from "express";
 import { state, view, SetPosts } from "./src/Posts.js";
-import {layout} from "./src/Layout.js";
+import { state as loginState, view as loginView } from "./src/Login.js";
+import { layout } from "./src/Layout.js";
 import axios from "axios";
 
 const app = express();
@@ -24,7 +25,6 @@ const htmlTemplate = (content) => /* HTML */ `
   </html>
 `;
 
-
 app.get("/", async (req, res) => {
   const response = await axios.get(
     "https://hyperapp-api.herokuapp.com/api/post"
@@ -32,6 +32,11 @@ app.get("/", async (req, res) => {
   const posts = response.data;
   const stateWithPosts = SetPosts(state, posts);
   const content = render.renderToString(layout(view)(stateWithPosts));
+  res.send(htmlTemplate(content));
+});
+app.get("/login", async (req, res) => {
+  const content = render.renderToString(layout(loginView)(loginState));
+
   res.send(htmlTemplate(content));
 });
 app.use(express.static("src"));
