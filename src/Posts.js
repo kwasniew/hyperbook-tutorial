@@ -1,10 +1,8 @@
-import { h, app, Lazy } from "./web_modules/hyperapp.js";
-import htm from "./web_modules/htm.js";
+import { app, Lazy } from "./web_modules/hyperapp.js";
+import {html} from "./Html.js";
 import { Http } from "./web_modules/hyperapp-fx.js";
 import { EventSourceListen } from "./lib/EventSource.js";
 import { WithGuid } from "./lib/Guid.js";
-
-const html = htm.bind(h);
 
 const idle = { status: "idle" };
 const saving = { status: "saving" };
