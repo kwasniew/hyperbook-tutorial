@@ -1,17 +1,12 @@
 import page from "./web_modules/page.js";
-import { InitPage as InitLoginPage } from "./Login.js";
-import { InitPage as InitPostsPage } from "./Posts.js";
-
-const SetLocation = (state, location) => ({ location });
 
 const routeSubscription = (dispatch, data) => {
-  page("/", () => {
-    dispatch(SetLocation, "/");
-    dispatch(InitPostsPage);
-  });
-  page("/login", () => {
-    dispatch(SetLocation, "/login");
-    dispatch(InitLoginPage);
+  Object.entries(data).map(([location, init]) => {
+    page(location, (context) => {
+      setTimeout(() => {
+        dispatch(init, { location, ...context.params });
+      });
+    });
   });
 
   page.start();
@@ -20,3 +15,5 @@ const routeSubscription = (dispatch, data) => {
     page.stop();
   };
 };
+
+export const RouteListen = (data) => [routeSubscription, data];

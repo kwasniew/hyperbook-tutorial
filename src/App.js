@@ -6,6 +6,7 @@ import {
 } from "./Posts.js";
 import { InitPage as InitLogin, view as loginView } from "./Login.js";
 import { layout } from "./Layout.js";
+import { RouteListen } from "./Router.js";
 
 const pages = {
   "/": postsView,
@@ -24,6 +25,6 @@ export const start = () =>
   app({
     init: {},
     view: layout(view),
-    subscriptions,
+    subscriptions: (state) => [subscriptions(state), RouteListen(pageInitActions)],
     node: document.getElementById("app"),
   });

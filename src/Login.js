@@ -21,4 +21,4 @@ export const view = (state) => html`
   </form>
 `;
 
-export const InitPage = (location) => (state) => ({ location, ...state });
+export const InitPage = (_, { location }) => ({ location, ...state });
