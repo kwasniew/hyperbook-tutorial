@@ -1,10 +1,28 @@
 import { app } from "./web_modules/hyperapp.js";
-import { init, view, subscriptions } from "./Posts.js";
+import {
+  InitPage as InitPosts,
+  view as postsView,
+  subscriptions,
+} from "./Posts.js";
+import { InitPage as InitLogin, view as loginView } from "./Login.js";
 import { layout } from "./Layout.js";
+
+const pages = {
+  "/": postsView,
+  "/login": loginView,
+};
+const pageInitActions = {
+  "/": InitPosts,
+  "/login": InitLogin,
+};
+const view = (state) => {
+  const page = pages[state.location];
+  return page ? page(state) : "Loading...";
+};
 
 export const start = () =>
   app({
-    init,
+    init: {},
     view: layout(view),
     subscriptions,
     node: document.getElementById("app"),

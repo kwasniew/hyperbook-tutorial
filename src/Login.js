@@ -14,7 +14,7 @@ const ChangeLogin = (state, login) => [
   WriteToStorage({ key: "hyperposts", value: login }),
 ];
 
-const view = (state) => html`
+export const view = (state) => html`
   <form method="get" action="/">
     <input onchange=${[ChangeLogin, targetValue]} value=${state.login} />
     <button>Login</button>
