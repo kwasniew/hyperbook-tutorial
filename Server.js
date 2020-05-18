@@ -4,6 +4,7 @@ import { state, view, SetPosts } from "./src/Posts.js";
 import { state as loginState, view as loginView } from "./src/Login.js";
 import { layout } from "./src/Layout.js";
 import axios from "axios";
+import compression from "compression";
 
 const app = express();
 
@@ -24,6 +25,8 @@ const htmlTemplate = (content) => /* HTML */ `
     </body>
   </html>
 `;
+
+app.use(compression());
 
 app.get("/", async (req, res) => {
   const response = await axios.get(

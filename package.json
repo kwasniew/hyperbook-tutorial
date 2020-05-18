@@ -4,13 +4,14 @@
     "snowpack": "snowpack install --exclude '**/*' --dest=src/web_modules",
     "postinstall": "npm run snowpack",
     "format": "prettier --write '**/*.js'",
-    "test": "mocha test/*Test.js"
+    "test": "mocha test/*Test.js",
+    "ssr": "node Server.js"
   },
   "dependencies": {
     "axios": "0.19.2",
+    "compression": "1.7.4",
     "express": "4.17.1",
-    "hyperapp-render": "3.2.0",
-    "serialize-javascript": "3.0.0"
+    "hyperapp-render": "3.2.0"
   },
   "webDependencies": {
     "@hyperapp/events": "0.0.4",
