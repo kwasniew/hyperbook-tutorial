@@ -79,7 +79,7 @@ const SetPost = (state, event) => {
     const post = JSON.parse(event.data);
     return {
       ...state,
-      posts: [post, ...state.posts],
+      posts: [...state.posts, post],
     };
   } catch (e) {
     return state;
@@ -129,7 +129,6 @@ const lazyPostList = ({ posts }) => Lazy({ view: postList, posts });
 
 export const view = (state) => html`
   <div>
-    <h1>Recent Posts</h1>
     <input
       data-testid="post-input"
       type="text"
@@ -137,15 +136,19 @@ export const view = (state) => html`
       value=${state.currentPostText}
       autofocus
     />
-    ${errorMessage(state.requestStatus)} ${addPostButton(state.requestStatus)}
-    <input
-      type="checkbox"
-      id="liveUpdate"
-      onchange=${ToggleLiveUpdate}
-      checked=${state.liveUpdate}
-    />
-    <label for="liveUpdate">Live Update</label>
+    ${" "}
+    ${addPostButton(state.requestStatus)} ${errorMessage(state.requestStatus)}
     ${lazyPostList({ posts: state.posts })}
+
+    <label for="liveUpdate"
+      ><input
+        type="checkbox"
+        id="liveUpdate"
+        onchange=${ToggleLiveUpdate}
+        checked=${state.liveUpdate}
+      />
+      Live Update</label
+    >
   </div>
 `;
 

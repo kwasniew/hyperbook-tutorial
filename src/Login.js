@@ -16,7 +16,12 @@ const ChangeLogin = (state, username) => [
 
 export const view = (state) => html`
   <form method="get" action="/" onsubmit=${preventDefault(Navigate("/"))}>
-    <input oninput=${[ChangeLogin, targetValue]} value=${state.username} />
+    <input
+      type="text"
+      oninput=${[ChangeLogin, targetValue]}
+      value=${state.username}
+    />
+    ${" "}
     <button>Login</button>
   </form>
 `;
