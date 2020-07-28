@@ -15,7 +15,7 @@ const htmlTemplate = (content) => /* HTML */ `
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>HyperPosts</title>
-      <link rel="stylesheet" href="https://andybrewer.github.io/mvp/mvp.css" />
+      <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
       <script type="module" src="Start.js"></script>
     </head>
     <body>

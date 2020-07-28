@@ -3,7 +3,7 @@ import { html } from "./Html.js";
 import { Http } from "./web_modules/hyperapp-fx.js";
 import { EventSourceListen } from "./lib/EventSource.js";
 import { WithGuid } from "./lib/Guid.js";
-import { ReadFromStorage } from "./web_modules/hyperapp-fx.js";
+import {ReadUsername} from "./User.js";
 
 const idle = { status: "idle" };
 const saving = { status: "saving" };
@@ -89,13 +89,6 @@ const SetPost = (state, event) => {
 export const LoadLatestPosts = Http({
   url: "https://hyperapp-api.herokuapp.com/api/post",
   action: SetPosts,
-});
-
-const SetUsername = (state, { value }) =>
-  value ? { ...state, username: value } : state;
-const ReadUsername = ReadFromStorage({
-  key: "hyperposts",
-  action: SetUsername,
 });
 
 const targetValue = (event) => event.target.value;
