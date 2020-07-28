@@ -71,7 +71,7 @@ export const UpdatePostText = (state, currentPostText) => ({
 
 export const SetPosts = (state, posts) => ({
   ...state,
-  posts,
+  posts: posts.reverse(),
 });
 
 const SetPost = (state, event) => {
