@@ -1,8 +1,10 @@
-import { html } from "./Html.js";
+import html from "./web_modules/hyperlit.js";
 
 const nav = html`
   <nav>
-    <a href="/" class="href">Posts</a> <a href="/login" class="href">Login</a>
+    <a href="/" class="href">Posts</a>
+    ${" "}
+    <a href="/login" class="href">Login</a>
   </nav>
 `;
 

@@ -1,14 +1,12 @@
-import { html } from "./Html.js";
+import html from "./web_modules/hyperlit.js";
 import { WriteToStorage } from "./web_modules/hyperapp-fx.js";
-import { Navigate } from "./Router.js";
-import { preventDefault } from "./web_modules/@hyperapp/events.js";
-import {ReadUsername} from "./User.js";
+import { withTargetValue } from "./lib/DomEvents.js";
+import {Navigate} from "./Router.js";
+import {preventDefault} from "./web_modules/@hyperapp/events.js";
 
-export const state = {
+const state = {
   username: "",
 };
-
-const targetValue = (event) => event.target.value;
 
 const ChangeLogin = (state, username) => [
   { ...state, username },
@@ -19,7 +17,7 @@ export const view = (state) => html`
   <form method="get" action="/" onsubmit=${preventDefault(Navigate("/"))}>
     <input
       type="text"
-      oninput=${[ChangeLogin, targetValue]}
+      oninput=${withTargetValue(ChangeLogin)}
       value=${state.username}
     />
     ${" "}
@@ -27,4 +25,7 @@ export const view = (state) => html`
   </form>
 `;
 
-export const InitPage = (state, { location }) => [{ location, username: state.username }, ReadUsername];
+export const InitPage = (state, { location }) => ({
+  location,
+  username: state.username,
+});

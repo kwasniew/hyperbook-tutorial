@@ -2,3 +2,4 @@ src/web_modules
 .idea
 node_modules
 *.txt
+demo

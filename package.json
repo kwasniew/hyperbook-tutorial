@@ -1,28 +1,21 @@
 {
   "type": "module",
   "scripts": {
-    "snowpack": "snowpack install --exclude '**/*' --dest=src/web_modules",
-    "postinstall": "npm run snowpack",
-    "format": "prettier --write '**/*.js'",
+    "snowpack": "snowpack install --exclude 'test/**' --dest=src/web_modules",
     "test": "mocha test/*Test.js",
-    "ssr": "node Server.js"
+    "postinstall": "npm run snowpack",
+    "format": "prettier --write '**/!(web_modules)/*.js'"
   },
   "dependencies": {
-    "axios": "0.19.2",
-    "compression": "1.7.4",
-    "express": "4.17.1",
-    "hyperapp-render": "3.2.0"
-  },
-  "webDependencies": {
     "@hyperapp/events": "0.0.4",
-    "htm": "3.0.4",
-    "hyperapp": "2.0.4",
+    "hyperapp": "2.0.8",
     "hyperapp-fx": "2.0.0-beta.1",
+    "hyperlit": "0.3.5",
     "page": "1.11.6"
   },
   "devDependencies": {
-    "mocha": "7.1.2",
+    "mocha": "8.0.1",
     "prettier": "2.0.5",
-    "snowpack": "2.0.0-beta.20"
+    "snowpack": "2.6.4"
   }
 }

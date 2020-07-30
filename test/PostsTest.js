@@ -1,7 +1,7 @@
 import assert from "assert";
 import { UpdatePostText, AddPost } from "../src/Posts.js";
 
-describe("Posts", () => {
+describe("Posts:", () => {
   it("post text is updated", () => {
     const initState = {
       currentPostText: "",
@@ -34,15 +34,18 @@ describe("Posts", () => {
     const initState = {
       currentPostText: "text",
       requestStatus: { status: "idle" },
-      post: [],
+      posts: [],
     };
 
-    const [newState, [, savePostData]] = AddPost(initState, "1234");
+    const [newState, [savePostEffect, savePostData]] = AddPost(
+      initState,
+      "1234"
+    );
 
     assert.deepStrictEqual(newState, {
       currentPostText: "",
       requestStatus: { status: "saving" },
-      post: [],
+      posts: [],
     });
     assert.deepStrictEqual(
       savePostData.url,
