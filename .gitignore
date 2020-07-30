@@ -3,3 +3,5 @@ src/web_modules
 node_modules
 *.txt
 demo
+.cache
+dist
