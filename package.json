@@ -5,7 +5,7 @@
     "test": "mocha test/*Test.js",
     "postinstall": "npm run snowpack",
     "format": "prettier --write '**/!(web_modules)/*.js'",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --experimental-scope-hoisting"
   },
   "dependencies": {
     "@hyperapp/events": "0.0.4",
