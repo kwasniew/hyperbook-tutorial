@@ -6,7 +6,7 @@ import {
 } from "./Posts.js";
 import { InitPage as InitLogin, view as loginView } from "./Login.js";
 import { layout } from "./Layout.js";
-import {RouteListen} from "./Router.js";
+import { RouteListen } from "./Router.js";
 
 const pages = {
     "/": postsView,
@@ -18,7 +18,7 @@ const pageInitActions = {
 };
 const view = (state) => {
     const page = pages[state.location];
-    return page ? page(state) : "Loading...";
+    return page ? page(state) : "Page not found.";
 };
 
 export const start = () =>

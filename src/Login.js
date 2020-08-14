@@ -1,12 +1,17 @@
 import html from "./web_modules/hyperlit.js";
 import { WriteToStorage } from "./web_modules/hyperapp-fx.js";
 import { withTargetValue } from "./lib/DomEvents.js";
-import {Navigate} from "./Router.js";
-import {preventDefault} from "./web_modules/@hyperapp/events.js";
+import { Link } from "./router.js";
+import { preventDefault } from "./web_modules/@hyperapp/events.js";
 
 const state = {
   username: "",
 };
+
+export const Navigate = (location) => (state) => [
+  state,
+  Link(location),
+];
 
 const ChangeLogin = (state, username) => [
   { ...state, username },
