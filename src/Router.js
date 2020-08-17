@@ -15,15 +15,10 @@ const routeSubscription = (dispatch, data) => {
         page.stop();
     };
 };
-const navigateEffect = (location) => [
-    (_, location) => {
-        page(location);
-    },
-    location,
-];
-export const Navigate = (location) => (state, event) => event.preventDefault() || [
-    state,
-    navigateEffect(location),
-];
+
+const linkEffect = (_dispatch, location) => {
+    page(location);
+};
+export const Link = (data) => [linkEffect, data]
 
 export const RouteListen = (data) => [routeSubscription, data];
